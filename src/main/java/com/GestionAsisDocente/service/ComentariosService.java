@@ -81,4 +81,9 @@ public class ComentariosService {
         return comentariosRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Comentario no encontrado"));
     }
+
+    public List<Comentarios> getComentariosByPublicacion(Integer publicacionId) {
+        return comentariosRepository.findByPublicacionIdOrderByIdAsc(publicacionId);
+    }
+
 }

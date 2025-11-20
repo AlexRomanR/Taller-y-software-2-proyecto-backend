@@ -25,8 +25,13 @@ public class Publicaciones {
 
     private String ubicacion;
 
+    private boolean estado;
+
+    @Column(nullable = true) // permite null
+    private String archivo;
+
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "usuario_id", nullable = true) // permite null
     private Usuario usuario; // quien publica
 
     @ManyToOne

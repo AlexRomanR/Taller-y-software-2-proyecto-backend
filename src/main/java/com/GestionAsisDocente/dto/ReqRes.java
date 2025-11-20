@@ -26,7 +26,7 @@ public class ReqRes {
     private List<Product> products;
     private Usuario ourUsers;
     private List<Usuario> ourUsersList;
-
+    private Integer userId;
 
     public String getToken() {
         return token;

@@ -8,6 +8,8 @@ import com.GestionAsisDocente.repository.UsuarioRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ChatService {
 
@@ -23,6 +25,22 @@ public class ChatService {
         Usuario usuario2 = usuarioRepo.findById(chatRequest.getUsuario2Id())
                 .orElseThrow(() -> new RuntimeException("Usuario 2 no encontrado"));
 
+        if (usuario1.getId().equals(usuario2.getId())) {
+            throw new RuntimeException("No puedes iniciar un chat contigo mismo");
+        }
+
+        // 1) ¿Ya existe chat entre estos dos?
+        Optional<Chat> existingChat = chatRepository
+                .findByUsuario1AndUsuario2OrUsuario2AndUsuario1(
+                        usuario1, usuario2,
+                        usuario2, usuario1
+                );
+
+        if (existingChat.isPresent()) {
+            return existingChat.get();
+        }
+
+        // 2) No existe, crear uno nuevo
         Chat chat = new Chat();
         chat.setUsuario1(usuario1);
         chat.setUsuario2(usuario2);

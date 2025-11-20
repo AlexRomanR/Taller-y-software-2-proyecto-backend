@@ -31,8 +31,11 @@ public class PublicacionesService {
     public Publicaciones createPublicacion(PublicacionesRequest request) {
         Tipo tipo = tipoRepository.findById(request.getTipoId())
                 .orElseThrow(() -> new RuntimeException("Tipo not found with id " + request.getTipoId()));
-        Usuario usuario = usuarioRepo.findById(request.getUsuarioId())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        Usuario usuario = null;
+        if (request.getUsuarioId() != null) {
+            usuario = usuarioRepo.findById(request.getUsuarioId())
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        }
 
 
 
@@ -41,9 +44,11 @@ public class PublicacionesService {
         pub.setDescripcion(request.getDescripcion());
         pub.setFecha(request.getFecha());
         pub.setHora(request.getHora());
+        pub.setArchivo(request.getArchivo());
         pub.setUbicacion(request.getUbicacion());
         pub.setTipo(tipo);
         pub.setUsuario(usuario);
+        pub.setEstado(usuario != null);
 
         return publicacionesRepository.save(pub);
     }
@@ -54,17 +59,22 @@ public class PublicacionesService {
 
         Tipo tipo = tipoRepository.findById(request.getTipoId())
                 .orElseThrow(() -> new RuntimeException("Tipo not found with id " + request.getTipoId()));
-        Usuario usuario = usuarioRepo.findById(request.getUsuarioId())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"+ request.getUsuarioId()));
+        Usuario usuario = null;
+        if (request.getUsuarioId() != null) {
+            usuario = usuarioRepo.findById(request.getUsuarioId())
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        }
 
 
         pub.setTitulo(request.getTitulo());
         pub.setDescripcion(request.getDescripcion());
         pub.setFecha(request.getFecha());
         pub.setHora(request.getHora());
+        pub.setArchivo(request.getArchivo());
         pub.setUbicacion(request.getUbicacion());
         pub.setTipo(tipo);
         pub.setUsuario(usuario);
+        pub.setEstado(request.isEstado());
 
         return publicacionesRepository.save(pub);
     }
@@ -79,4 +89,20 @@ public class PublicacionesService {
         return publicacionesRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Publicación not found with id " + id));
     }
+
+    public List<Publicaciones> getPublicacionesOcultas() {
+        return publicacionesRepository.findByEstadoFalse();
+    }
+
+
+    public List<Publicaciones> getPublicacionesByUser(Integer userId) {
+        Usuario usuario = usuarioRepo.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con id " + userId));
+        return publicacionesRepository.findByUsuario(usuario);
+    }
+    public List<Publicaciones> getReportesBusquedaMascotas() {
+        Integer TIPO_BUSCANDO = 2; // o léelo de un enum/constante si prefieres
+        return publicacionesRepository.findByTipoIdAndEstadoTrue(TIPO_BUSCANDO);
+    }
+
 }

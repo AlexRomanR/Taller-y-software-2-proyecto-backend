@@ -63,6 +63,7 @@ public class AuthService {
             if (!roles.isEmpty()) {
                 response.setRole(roles.get(0)); // Agregar campo role si tu ReqRes lo tiene
             }
+            response.setUserId(user.getId());
             response.setRefreshToken(refreshToken);
             response.setExpirationTime("24Hrs");
             response.setMessage("Successfully Logged In");
