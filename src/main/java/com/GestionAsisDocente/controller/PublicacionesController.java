@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/adminuser")
+@RequestMapping("/public")
 public class PublicacionesController {
 
     @Autowired
@@ -41,5 +41,19 @@ public class PublicacionesController {
     @GetMapping("/get-publicacion/{id}")
     public ResponseEntity<Publicaciones> getPublicacionById(@PathVariable Integer id) {
         return ResponseEntity.ok(publicacionesService.getPublicacionById(id));
+    }
+
+    @GetMapping("/get-publicaciones-ocultas")
+    public ResponseEntity<List<Publicaciones>> getPublicacionesOcultas() {
+        return ResponseEntity.ok(publicacionesService.getPublicacionesOcultas());
+    }
+
+    @GetMapping("/get-publicaciones-usuario/{userId}")
+    public ResponseEntity<List<Publicaciones>> getPublicacionesByUser(@PathVariable Integer userId) {
+        return ResponseEntity.ok(publicacionesService.getPublicacionesByUser(userId));
+    }
+    @GetMapping("/reportes-busqueda-mascotas")
+    public ResponseEntity<List<Publicaciones>> getReportesBusquedaMascotas() {
+        return ResponseEntity.ok(publicacionesService.getReportesBusquedaMascotas());
     }
 }

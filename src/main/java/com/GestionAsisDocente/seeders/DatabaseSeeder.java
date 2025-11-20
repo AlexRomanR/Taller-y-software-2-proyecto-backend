@@ -157,11 +157,20 @@ public class DatabaseSeeder implements CommandLineRunner {
             Usuario admin = ourUserRepo.findByEmail("admin@gmail.com").orElseThrow();
             Roles rolAdmin = rolesRepository.findByNombre("ADMIN").orElseThrow();
 
-            RolUser rolUser = new RolUser();
-            rolUser.setUsuario(admin);
-            rolUser.setRol(rolAdmin);
+            Usuario user = ourUserRepo.findByEmail("user@gmail.com").orElseThrow();
+            Roles rolUserr = rolesRepository.findByNombre("USERS").orElseThrow();
 
-            rolUserRepository.save(rolUser);
+            // Asignar rol al admin
+            RolUser rolUserAdmin = new RolUser();
+            rolUserAdmin.setUsuario(admin);
+            rolUserAdmin.setRol(rolAdmin);
+            rolUserRepository.save(rolUserAdmin);
+
+            // Asignar rol al usuario normal
+            RolUser rolUserNormal = new RolUser();
+            rolUserNormal.setUsuario(user);
+            rolUserNormal.setRol(rolUserr);
+            rolUserRepository.save(rolUserNormal);
         }
 
         // Modulos
@@ -249,6 +258,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 
 
         //publicaciones
+        // publicaciones
         if (publicacionesRepository.count() == 0) {
 
             // Obtener tipos existentes
@@ -263,31 +273,145 @@ public class DatabaseSeeder implements CommandLineRunner {
             if (usuarios.isEmpty()) throw new RuntimeException("No hay usuarios en la base de datos");
 
             Usuario user1 = usuarios.get(0);
+            Usuario user2 = usuarios.size() > 1 ? usuarios.get(1) : user1;
 
-            // Crear publicaciones ejemplo
+            List<Publicaciones> publicaciones = new ArrayList<>();
+
+            // 1) VISTO - visible
             Publicaciones pub1 = new Publicaciones();
             pub1.setTitulo("Perro encontrado en el parque central");
             pub1.setDescripcion("Se encontró un perro marrón de tamaño mediano, con collar azul.");
             pub1.setFecha(LocalDate.now().minusDays(2));
             pub1.setHora(LocalTime.of(14, 30));
-            pub1.setUbicacion("Parque Central, Santa Cruz");
+            pub1.setEstado(true);
+            pub1.setUbicacion("-17.783300, -63.182100"); // Plaza principal
+            pub1.setArchivo("https://media.istockphoto.com/id/1724603954/es/vector/anuncio-de-aviso-de-cartel-de-animal-de-compa%C3%B1%C3%ADa-desaparecido-perdido-en-el-concepto-de.jpg");
             pub1.setTipo(tipoVisto);
             pub1.setUsuario(user1);
+            publicaciones.add(pub1);
 
+            // 2) BUSCANDO - visible
             Publicaciones pub2 = new Publicaciones();
             pub2.setTitulo("Busco perro perdido cerca de mi casa");
             pub2.setDescripcion("Mi perro se perdió ayer, es pequeño y blanco con manchas negras.");
             pub2.setFecha(LocalDate.now().minusDays(1));
             pub2.setHora(LocalTime.of(10, 15));
-            pub2.setUbicacion("Av. Santos Dumont, Santa Cruz");
+            pub2.setUbicacion("-17.779500, -63.180000"); // zona residencial
+            pub2.setEstado(true);
+            pub2.setArchivo("https://media.istockphoto.com/id/1724603954/es/vector/anuncio-de-aviso-de-cartel-de-animal-de-compa%C3%B1%C3%ADa-desaparecido-perdido-en-el-concepto-de.jpg");
             pub2.setTipo(tipoBuscando);
             pub2.setUsuario(user1);
+            publicaciones.add(pub2);
 
-            publicacionesRepository.save(pub1);
-            publicacionesRepository.save(pub2);
+            // 3) BUSCANDO - visible
+            Publicaciones pub3 = new Publicaciones();
+            pub3.setTitulo("Gatito perdido por la plaza principal");
+            pub3.setDescripcion("Gato negro con mancha blanca en el pecho, muy asustadizo. Se perdió anoche.");
+            pub3.setFecha(LocalDate.now().minusDays(1));
+            pub3.setHora(LocalTime.of(21, 5));
+            pub3.setUbicacion("-17.784200, -63.180800");
+            pub3.setEstado(true);
+            pub3.setArchivo("https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg");
+            pub3.setTipo(tipoBuscando);
+            pub3.setUsuario(user2);
+            publicaciones.add(pub3);
 
-            System.out.println("Seeder de publicaciones completado.");
+            // 4) BUSCANDO - visible
+            Publicaciones pub4 = new Publicaciones();
+            pub4.setTitulo("Perra golden retriever perdida en Equipetrol");
+            pub4.setDescripcion("Se llama Luna, lleva un pañuelo rosado en el cuello. Última vez vista cerca de un café.");
+            pub4.setFecha(LocalDate.now().minusDays(3));
+            pub4.setHora(LocalTime.of(18, 45));
+            pub4.setUbicacion("-17.770500, -63.184300");
+            pub4.setEstado(true);
+            pub4.setArchivo("https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg");
+            pub4.setTipo(tipoBuscando);
+            pub4.setUsuario(user1);
+            publicaciones.add(pub4);
+
+            // 5) VISTO - visible
+            Publicaciones pub5 = new Publicaciones();
+            pub5.setTitulo("Gato visto en el techo de una casa");
+            pub5.setDescripcion("Gatito blanco con cola gris, lleva un collar rojo. Lo vi en el techo del tercer anillo.");
+            pub5.setFecha(LocalDate.now().minusDays(4));
+            pub5.setHora(LocalTime.of(16, 10));
+            pub5.setUbicacion("-17.786800, -63.168900");
+            pub5.setEstado(true);
+            pub5.setArchivo("https://images.pexels.com/photos/617278/pexels-photo-617278.jpeg");
+            pub5.setTipo(tipoVisto);
+            pub5.setUsuario(user2);
+            publicaciones.add(pub5);
+
+            // 6) BUSCANDO - visible
+            Publicaciones pub6 = new Publicaciones();
+            pub6.setTitulo("Perro mestizo perdido por el mercado");
+            pub6.setDescripcion("Perro de tamaño grande, pelaje negro con café, muy amigable. Responde al nombre 'Rocco'.");
+            pub6.setFecha(LocalDate.now().minusDays(5));
+            pub6.setHora(LocalTime.of(11, 20));
+            pub6.setUbicacion("-17.791200, -63.194300");
+            pub6.setEstado(true);
+            pub6.setArchivo("https://images.pexels.com/photos/4608267/pexels-photo-4608267.jpeg");
+            pub6.setTipo(tipoBuscando);
+            pub6.setUsuario(user1);
+            publicaciones.add(pub6);
+
+            // 7) BUSCANDO - visible
+            Publicaciones pub7 = new Publicaciones();
+            pub7.setTitulo("Perrito pequeño desaparecido en el cuarto anillo");
+            pub7.setDescripcion("Muy juguetón, color beige, llevaba un suéter azul cuando salió.");
+            pub7.setFecha(LocalDate.now().minusDays(2));
+            pub7.setHora(LocalTime.of(9, 0));
+            pub7.setUbicacion("-17.802300, -63.204500");
+            pub7.setEstado(true);
+            pub7.setArchivo("https://images.pexels.com/photos/5731861/pexels-photo-5731861.jpeg");
+            pub7.setTipo(tipoBuscando);
+            pub7.setUsuario(user2);
+            publicaciones.add(pub7);
+
+            // 8) VISTO - NO visible (oculto)
+            Publicaciones pub8 = new Publicaciones();
+            pub8.setTitulo("Gato visto cerca de la universidad");
+            pub8.setDescripcion("Gato atigrado, parecía perdido pero se veía bien cuidado.");
+            pub8.setFecha(LocalDate.now().minusDays(6));
+            pub8.setHora(LocalTime.of(13, 40));
+            pub8.setUbicacion("-17.812900, -63.167000");
+            pub8.setEstado(false); // oculto
+            pub8.setArchivo("https://images.pexels.com/photos/1276553/pexels-photo-1276553.jpeg");
+            pub8.setTipo(tipoVisto);
+            pub8.setUsuario(user1);
+            publicaciones.add(pub8);
+
+            // 9) BUSCANDO - NO visible (oculto)
+            Publicaciones pub9 = new Publicaciones();
+            pub9.setTitulo("Buscando a mi perrita en zona norte");
+            pub9.setDescripcion("Se llama Kira, lleva un collar con placa, es muy tímida con desconocidos.");
+            pub9.setFecha(LocalDate.now().minusDays(7));
+            pub9.setHora(LocalTime.of(19, 30));
+            pub9.setUbicacion("-17.795000, -63.170000");
+            pub9.setEstado(false); // oculto
+            pub9.setArchivo("https://images.pexels.com/photos/7210751/pexels-photo-7210751.jpeg");
+            pub9.setTipo(tipoBuscando);
+            pub9.setUsuario(user2);
+            publicaciones.add(pub9);
+
+            // 10) BUSCANDO - visible
+            Publicaciones pub10 = new Publicaciones();
+            pub10.setTitulo("Perrito anciano perdido cerca del parque urbano");
+            pub10.setDescripcion("Camina despacio, tiene un ojo nublado, necesita medicación diaria.");
+            pub10.setFecha(LocalDate.now().minusDays(1));
+            pub10.setHora(LocalTime.of(7, 50));
+            pub10.setUbicacion("-17.789900, -63.181500");
+            pub10.setEstado(true);
+            pub10.setArchivo("https://images.pexels.com/photos/2817405/pexels-photo-2817405.jpeg");
+            pub10.setTipo(tipoBuscando);
+            pub10.setUsuario(user1);
+            publicaciones.add(pub10);
+
+            publicacionesRepository.saveAll(publicaciones);
+
+            System.out.println("Seeder de publicaciones completado. Total publicaciones: " + publicaciones.size());
         }
+
 
         if (comentariosRepository.count() == 0) {
             List<Usuario> usuarios = ourUserRepo.findAll();

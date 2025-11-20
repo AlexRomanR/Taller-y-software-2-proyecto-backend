@@ -41,4 +41,9 @@ public class ComentariosController {
     public ResponseEntity<Comentarios> getComentarioById(@PathVariable Integer id) {
         return ResponseEntity.ok(comentariosService.getComentarioById(id));
     }
+
+    @GetMapping("/get-comentarios-publicacion/{publicacionId}")
+    public ResponseEntity<List<Comentarios>> getComentariosByPublicacion(@PathVariable Integer publicacionId) {
+        return ResponseEntity.ok(comentariosService.getComentariosByPublicacion(publicacionId));
+    }
 }

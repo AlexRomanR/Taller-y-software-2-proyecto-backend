@@ -12,6 +12,8 @@ public class PublicacionesRequest {
     private LocalDate fecha;
     private LocalTime hora;
     private String ubicacion;
+    private String archivo;
     private Integer tipoId; // id del tipo asociado
     private Integer usuarioId;
+    private boolean estado;
 }
