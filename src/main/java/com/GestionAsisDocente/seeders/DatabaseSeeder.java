@@ -285,7 +285,7 @@ public class DatabaseSeeder implements CommandLineRunner {
             pub1.setHora(LocalTime.of(14, 30));
             pub1.setEstado(true);
             pub1.setUbicacion("-17.783300, -63.182100"); // Plaza principal
-            pub1.setArchivo("https://media.istockphoto.com/id/1724603954/es/vector/anuncio-de-aviso-de-cartel-de-animal-de-compa%C3%B1%C3%ADa-desaparecido-perdido-en-el-concepto-de.jpg");
+            pub1.setArchivo("https://eq2imhfmrcc.exactdn.com/wp-content/uploads/2016/08/golden-retriever.jpg?strip=all&lossy=1&ssl=1");
             pub1.setTipo(tipoVisto);
             pub1.setUsuario(user1);
             publicaciones.add(pub1);
@@ -298,7 +298,7 @@ public class DatabaseSeeder implements CommandLineRunner {
             pub2.setHora(LocalTime.of(10, 15));
             pub2.setUbicacion("-17.779500, -63.180000"); // zona residencial
             pub2.setEstado(true);
-            pub2.setArchivo("https://media.istockphoto.com/id/1724603954/es/vector/anuncio-de-aviso-de-cartel-de-animal-de-compa%C3%B1%C3%ADa-desaparecido-perdido-en-el-concepto-de.jpg");
+            pub2.setArchivo("https://media.lmneuquen.com/p/9b996b6a2539b1ad97dc56bc3862580b/adjuntos/195/imagenes/001/849/0001849645/1200x675/smart/en-muchos-barrios-se-observan-perros-sueltos-un-dueno-toda-hora-y-todo-lugar-la-situacion-se-replica-pleno-centro-la-ciudad.jpg");
             pub2.setTipo(tipoBuscando);
             pub2.setUsuario(user1);
             publicaciones.add(pub2);
@@ -350,7 +350,7 @@ public class DatabaseSeeder implements CommandLineRunner {
             pub6.setHora(LocalTime.of(11, 20));
             pub6.setUbicacion("-17.791200, -63.194300");
             pub6.setEstado(true);
-            pub6.setArchivo("https://images.pexels.com/photos/4608267/pexels-photo-4608267.jpeg");
+            pub6.setArchivo("https://www.purina.com.bo/sites/default/files/2024-04/purina-brand-perros-mestizos-amor-y-responsabilidad-nota-01.jpg");
             pub6.setTipo(tipoBuscando);
             pub6.setUsuario(user1);
             publicaciones.add(pub6);
